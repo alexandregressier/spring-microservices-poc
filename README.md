@@ -1,6 +1,6 @@
 # Spring Microservices PoC
 
-A proof of concept (PoC) demonstrating the capabilities of Spring Boot for building microservices-based applications
+A proof of concept (PoC) demonstrating the relevance of Spring for building a microservices-based application.
 
 ## Sources
 
