@@ -1,0 +1,31 @@
+###
+POST {{urlPrefix}}/licenses
+Content-Type: application/json
+
+{
+  "productName": "Adobe Illustrator",
+  "description": "Industry-leading vector graphics software",
+  "type": "STANDARD"
+}
+> {% client.global.set("licenseId", response.body.id) %}
+
+###
+GET {{urlPrefix}}/licenses
+Accept: application/json
+
+###
+GET {{urlPrefix}}/licenses/{{licenseId}}
+Accept: application/json
+
+###
+PUT {{urlPrefix}}/licenses/{{licenseId}}
+Content-Type: application/json
+
+{
+  "productName": "Illustrator",
+  "description": "A vector graphics editor and design program",
+  "type": "STANDARD"
+}
+
+###
+DELETE {{urlPrefix}}/licenses/{{licenseId}}

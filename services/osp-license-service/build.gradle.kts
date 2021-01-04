@@ -1,10 +1,13 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
+    val kotlinVersion = "1.4.21" // TODO: store Kotlin's version properly
+    kotlin("jvm") version kotlinVersion
+    kotlin("plugin.spring") version kotlinVersion
+    kotlin("plugin.jpa") version kotlinVersion
+
     id("org.springframework.boot") version "2.5.0-SNAPSHOT"
     id("io.spring.dependency-management") version "1.0.10.RELEASE"
-    kotlin("jvm") version "1.4.21"
-    kotlin("plugin.spring") version "1.4.21"
 }
 
 group = "dev.gressier.osp"
@@ -22,18 +25,26 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
+    // Ops
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+
     // Web
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("org.springframework.boot:spring-boot-starter-hateoas")
 
-    // Ops
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    // SQL
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    runtimeOnly("com.h2database:h2")
 
     // Development
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 
     // Tests
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+    // Logging
+    implementation("io.github.microutils:kotlin-logging:2.0.4")
 }
 
 tasks.withType<KotlinCompile> {
@@ -45,4 +56,10 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+allOpen {
+    annotation("javax.persistence.Entity")
+    annotation("javax.persistence.MappedSuperclass")
+    annotation("javax.persistence.Embeddable")
 }
