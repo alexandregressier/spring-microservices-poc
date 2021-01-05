@@ -16,3 +16,6 @@ data class License(
 
     enum class Type { FREE, STANDARD, ENTERPRISE }
 }
+
+class LicenseNotFoundException(id: UUID) :
+    RuntimeException("Could not find License $id")
