@@ -38,8 +38,7 @@ class LicenseController {
 
     @GetMapping("/{licenseId}")
     fun getLicense(@PathVariable licenseId: UUID): EntityModel<License> =
-        repository.findById(licenseId)
-            .map { assembler.toModel(it) }
+        repository.findById(licenseId).map(assembler::toModel)
             .orElseThrow { ResponseStatusException(HttpStatus.NOT_FOUND) }
 
     @PutMapping("/{licenseId}")
