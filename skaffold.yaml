@@ -1,0 +1,14 @@
+apiVersion: skaffold/v2beta10
+kind: Config
+metadata:
+  name: spring-microservices-poc
+build:
+  artifacts:
+    - image: gressier/osp-license-service
+      context: services/osp-license-service
+      custom:
+        buildCommand: ../../gradlew bootBuildImage
+deploy:
+  kubectl:
+    manifests:
+      - k8s/osp-license-service.yaml
