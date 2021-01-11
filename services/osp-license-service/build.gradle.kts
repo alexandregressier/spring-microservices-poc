@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 
 plugins {
-    val kotlinVersion = "1.4.21" // TODO: store Kotlin's version properly
+    val kotlinVersion = "1.4.21"
     kotlin("jvm") version kotlinVersion
     kotlin("plugin.spring") version kotlinVersion
     kotlin("plugin.jpa") version kotlinVersion
@@ -12,7 +12,7 @@ plugins {
 }
 
 group = "dev.gressier.osp"
-version = "0.0.1-SNAPSHOT"
+version = "0.1.0-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
