@@ -2,8 +2,19 @@ spring:
   application:
     name: license-service
   output.ansi.enabled: always
+server:
+  port: 80
+
+---
+spring:
   config:
     activate.on-profile: default
-    import: configserver:http://localhost:8888
+    import: optional:configserver:http://localhost:8888
 server:
   port: 8081
+
+---
+spring:
+  config:
+    activate.on-profile: dev
+    import: configserver:http://osp-config-service
