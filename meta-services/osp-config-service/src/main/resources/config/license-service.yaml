@@ -1,0 +1,8 @@
+example:
+  property: This is the default profile
+
+---
+spring.config.activate.on-profile: dev
+
+example:
+  property: This is the dev profile
