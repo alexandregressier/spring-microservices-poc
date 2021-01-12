@@ -44,7 +44,3 @@ tasks.withType<KotlinCompile> {
         jvmTarget = "${java.sourceCompatibility}"
     }
 }
-
-tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootBuildImage>("bootBuildImage") {
-    runImage = "gressier/${project.name}:${project.version}"
-}

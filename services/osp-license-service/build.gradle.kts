@@ -1,5 +1,4 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 
 plugins {
     val kotlinVersion = "1.4.21"
@@ -55,10 +54,6 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
-}
-
-tasks.getByName<BootBuildImage>("bootBuildImage") {
-    runImage = "gressier/${project.name}:${project.version}"
 }
 
 allOpen {
