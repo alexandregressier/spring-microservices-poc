@@ -1,12 +1,11 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    val kotlinVersion = "1.4.21"
-    kotlin("jvm") version kotlinVersion
-    kotlin("plugin.spring") version kotlinVersion
+    kotlin("jvm")
+    kotlin("plugin.spring")
 
-    id("org.springframework.boot") version "2.4.1"
-    id("io.spring.dependency-management") version "1.0.10.RELEASE"
+    id("org.springframework.boot")
+    id("io.spring.dependency-management")
 }
 
 group = "dev.gressier.osp"
