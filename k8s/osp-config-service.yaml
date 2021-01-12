@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: osp-config-service
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app: osp-config-service
+  template:
+    metadata:
+      labels:
+        app: osp-config-service
+    spec:
+      containers:
+        - name: osp-config-service
+          image: gressier/osp-config-service
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: osp-config-service
+spec:
+  selector:
+    app: osp-config-service
+  ports:
+    - port: 8080
+      targetPort: 8080

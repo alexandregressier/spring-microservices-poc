@@ -4,6 +4,11 @@ metadata:
   name: spring-microservices-poc
 build:
   artifacts:
+    - image: gressier/osp-config-service
+      context: meta-services/osp-config-service
+      custom:
+        buildCommand: ../../gradlew bootBuildImage --imageName "$IMAGE"
+
     - image: gressier/osp-license-service
       context: services/osp-license-service
       custom:
@@ -12,4 +17,5 @@ build:
 deploy:
   kubectl:
     manifests:
+      - k8s/osp-config-service.yaml
       - k8s/osp-license-service.yaml
