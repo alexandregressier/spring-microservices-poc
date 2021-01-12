@@ -1,10 +1,12 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
+    // Kotlin
     kotlin("jvm")
     kotlin("plugin.spring")
     kotlin("plugin.jpa")
 
+    // Spring
     id("org.springframework.boot")
     id("io.spring.dependency-management")
 }

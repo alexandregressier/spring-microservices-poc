@@ -1,9 +1,11 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
+    // Kotlin
     kotlin("jvm")
     kotlin("plugin.spring")
 
+    // Spring
     id("org.springframework.boot")
     id("io.spring.dependency-management")
 }
@@ -15,9 +17,10 @@ java.sourceCompatibility = JavaVersion.VERSION_11
 repositories {
     mavenCentral()
     maven { url = uri("https://repo.spring.io/milestone") }
+    maven { url = uri("https://repo.spring.io/snapshot") }
 }
 
-extra["springCloudVersion"] = "2020.0.0"
+extra["springCloudVersion"] = "2020.0.1-SNAPSHOT"
 
 dependencies {
     // Kotlin
