@@ -21,17 +21,22 @@ repositories {
     maven { url = uri("https://repo.spring.io/snapshot") }
 }
 
+extra["springCloudVersion"] = "2020.0.1-SNAPSHOT"
+
 dependencies {
     // Kotlin
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
     // Ops
     implementation("org.springframework.boot:spring-boot-starter-actuator")
 
+    // Spring Cloud Config
+    implementation("org.springframework.cloud:spring-cloud-starter-config")
+
     // Web
     implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.springframework.boot:spring-boot-starter-hateoas")
 
     // SQL
@@ -46,6 +51,12 @@ dependencies {
 
     // Logging
     implementation("io.github.microutils:kotlin-logging:2.0.4")
+}
+
+dependencyManagement {
+    imports {
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+    }
 }
 
 tasks.withType<KotlinCompile> {
