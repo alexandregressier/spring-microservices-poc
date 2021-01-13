@@ -1,8 +1,25 @@
 example:
   property: This is the default profile
 
+logging:
+  level:
+    root: info
+
+management:
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
 ---
-spring.config.activate.on-profile: dev
+spring:
+  config:
+    activate.on-profile: dev
 
 example:
   property: This is the dev profile
