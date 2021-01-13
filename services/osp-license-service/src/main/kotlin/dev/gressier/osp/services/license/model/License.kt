@@ -9,6 +9,7 @@ data class License(
     @Id @GeneratedValue val id: UUID?,
     val productName: String,
     val description: String,
+    val comment: String?,
     @Enumerated(EnumType.STRING) val type: Type,
 ) : RepresentationModel<License>() {
 

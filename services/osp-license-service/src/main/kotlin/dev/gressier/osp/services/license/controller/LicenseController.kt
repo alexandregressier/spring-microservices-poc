@@ -3,6 +3,7 @@ package dev.gressier.osp.services.license.controller
 import dev.gressier.osp.services.license.model.License
 import dev.gressier.osp.services.license.repository.LicenseRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.hateoas.CollectionModel
 import org.springframework.hateoas.EntityModel
 import org.springframework.hateoas.IanaLinkRelations
@@ -21,9 +22,11 @@ class LicenseController {
     @Autowired private lateinit var repository: LicenseRepository
     @Autowired private lateinit var assembler: LicenseModelAssembler
 
+    @Value("\${example.property:None}") private lateinit var comment: String
+
     @PostMapping
     fun createLicense(@RequestBody license: License): ResponseEntity<EntityModel<License>> {
-        val model = assembler.toModel(repository.save(license))
+        val model = assembler.toModel(repository.save(license.copy(comment = license.comment ?: comment)))
         return ResponseEntity
             .created(model.getRequiredLink(IanaLinkRelations.SELF).toUri())
             .body(model)
@@ -54,6 +57,7 @@ class LicenseController {
                         id = licenseId,
                         productName = newLicense.productName,
                         description = newLicense.description,
+                        comment = newLicense.comment ?: comment,
                         type = newLicense.type,
                     ))
             }.orElseGet {
