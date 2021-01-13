@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: osp-license-service
 spec:
-  replicas: 2
+  replicas: 1
   revisionHistoryLimit: 0
   selector:
     matchLabels:
