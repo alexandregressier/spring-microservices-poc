@@ -1,7 +1,7 @@
 spring:
   application:
     name: license-service
-  output.ansi.enabled: always
+  main.banner-mode: off
 server:
   port: 80
 
@@ -10,6 +10,7 @@ spring:
   config:
     activate.on-profile: default
     import: optional:configserver:http://localhost:8888
+  main.banner-mode: console
 server:
   port: 8081
 
