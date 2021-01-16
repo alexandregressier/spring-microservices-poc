@@ -1,0 +1,4 @@
+apiVersion: skaffold/v2beta10
+kind: Config
+metadata:
+  name: spring-microservices-poc
