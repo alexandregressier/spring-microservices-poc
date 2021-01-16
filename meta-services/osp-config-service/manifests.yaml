@@ -22,22 +22,22 @@ spec:
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: dev,native
-          readinessProbe:
-            httpGet:
-              path: /actuator/health
-              port: http
-            initialDelaySeconds: 10
-            periodSeconds: 3
-            timeoutSeconds: 2
-            failureThreshold: 1
-          livenessProbe:
-            httpGet:
-              path: /actuator/health
-              port: http
-            initialDelaySeconds: 20
-            periodSeconds: 8
-            timeoutSeconds: 2
-            failureThreshold: 1
+#          readinessProbe:
+#            httpGet:
+#              path: /actuator/health
+#              port: http
+#            initialDelaySeconds: 10
+#            periodSeconds: 3
+#            timeoutSeconds: 2
+#            failureThreshold: 1
+#          livenessProbe:
+#            httpGet:
+#              path: /actuator/health
+#              port: http
+#            initialDelaySeconds: 20
+#            periodSeconds: 8
+#            timeoutSeconds: 2
+#            failureThreshold: 1
 
 ---
 apiVersion: v1
