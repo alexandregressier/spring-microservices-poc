@@ -12,6 +12,8 @@ spec:
     metadata:
       labels:
         app: osp-license-service
+      annotations:
+        fluentbit.io/parser: spring-boot
     spec:
       initContainers:
         - name: wait-for-200

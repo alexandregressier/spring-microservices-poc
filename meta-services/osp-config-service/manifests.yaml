@@ -12,6 +12,8 @@ spec:
     metadata:
       labels:
         app: osp-config-service
+      annotations:
+        fluentbit.io/parser: spring-boot
     spec:
       containers:
         - name: osp-config-service
