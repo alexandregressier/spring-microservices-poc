@@ -15,11 +15,3 @@ management:
     web:
       exposure:
         include: '*'
-
----
-spring:
-  config:
-    activate.on-profile: dev
-
-example:
-  property: This is the dev profile
