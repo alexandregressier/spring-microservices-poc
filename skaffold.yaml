@@ -6,14 +6,12 @@ metadata:
 build:
   artifacts:
     - image: gressier/osp-config-service
-      context: meta-services/osp-config-service
       custom:
-        buildCommand: ../../gradlew bootBuildImage --imageName "$IMAGE"
+        buildCommand: ./gradlew meta-services:osp-config-service:bootBuildImage --imageName "$IMAGE"
 
     - image: gressier/osp-license-service
-      context: services/osp-license-service
       custom:
-        buildCommand: ../../gradlew bootBuildImage --imageName "$IMAGE"
+        buildCommand: ./gradlew services:osp-license-service:bootBuildImage --imageName "$IMAGE"
 
 deploy:
   kubectl:
