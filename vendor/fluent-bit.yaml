@@ -53,22 +53,21 @@ data:
         HTTP_Listen   0.0.0.0
         HTTP_Port     2020
 
-    @INCLUDE input-kubernetes.conf
-    @INCLUDE filter-kubernetes.conf
-    @INCLUDE output-elasticsearch.conf
+    @INCLUDE kubernetes.conf
+    @INCLUDE osp-spring-boot.conf
 
-  input-kubernetes.conf: |
+  kubernetes.conf: |
     [INPUT]
-        Name              tail
-        Tag               kube.*
-        Path              /var/log/containers/*.log
-        Parser            docker
-        DB                /var/log/flb_kube.db
-        Mem_Buf_Limit     5MB
-        Skip_Long_Lines   On
-        Refresh_Interval  10
+        Name             tail
+        Tag              kube.*
+        Path             /var/log/containers/*.log
+        Exclude_Path     /var/log/containers/osp-*-service*.log
+        Parser           docker
+        DB               /var/log/flb_kube.db
+        Mem_Buf_Limit    5MB
+        Skip_Long_Lines  On
+        Refresh_Interval 10
 
-  filter-kubernetes.conf: |
     [FILTER]
         Name                kubernetes
         Match               kube.*
@@ -81,53 +80,52 @@ data:
         K8S-Logging.Parser  On
         K8S-Logging.Exclude Off
 
-  output-elasticsearch.conf: |
     [OUTPUT]
         Name            es
-        Match           *
+        Match           kube.*
         Host            ${FLUENT_ELASTICSEARCH_HOST}
         Port            ${FLUENT_ELASTICSEARCH_PORT}
+        Retry_Limit     False
         Logstash_Format On
         Replace_Dots    On
-        Retry_Limit     False
-        Trace_Output    On
 
+  osp-spring-boot.conf: |
+    [INPUT]
+        Name               tail
+        Tag                kube.*
+        Path               /var/log/containers/osp-*-service*.log
+        Parser             docker
+        Docker_Mode        On
+        Docker_Mode_Flush  5
+        Docker_Mode_Parser spring-boot-1st-line
+        DB                 /var/log/flb_kube.db
+        Mem_Buf_Limit      10MB
+        Skip_Long_Lines    On
+        Refresh_Interval   10
+
+  # TODO: find out why the named capturing groups in the `spring-boot-1st-line` regex make multiline logging work
   parsers.conf: |
-    [PARSER]
-        Name        json
-        Format      json
-        Time_Key    time
-        Time_Format %d/%b/%Y:%H:%M:%S %z
-
     [PARSER]
         Name        docker
         Format      json
         Time_Key    time
-        Time_Format %Y-%m-%dT%H:%M:%S.%L
+        Time_Format %Y-%m-%dT%H:%M:%S.%L%z
         Time_Keep   On
 
     [PARSER]
-        Name        cri
+        # https://rubular.com/r/ix3MByns9I4OjW
+        Name        spring-boot-1st-line
         Format      regex
-        Regex       ^(?<time>[^ ]+) (?<stream>stdout|stderr) (?<logtag>[^ ]*) (?<message>.*)$
-        Time_Key    time
-        Time_Format %Y-%m-%dT%H:%M:%S.%L%z
+        Regex       ^{"log":"(?<time>\S+) (?<ms_elapsed>\d+) (?<level>\S+) (?<pid>\d+) --- \[(?<thread>.+)\] (?<emitter>\S+) : (?<message>.*?)"
 
     [PARSER]
-        Name        syslog
-        Format      regex
-        Regex       ^\<(?<pri>[0-9]+)\>(?<time>[^ ]* {1,2}[^ ]* [^ ]*) (?<host>[^ ]*) (?<ident>[a-zA-Z0-9_\/\.\-]*)(?:\[(?<pid>[0-9]+)\])?(?:[^\:]*\:)? *(?<message>.*)$
-        Time_Key    time
-        Time_Format %b %d %H:%M:%S
-
-    [PARSER]
-        # https://rubular.com/r/0MYzYxH3HpgiGR
+        # https://rubular.com/r/GxEOFX1ZQlY2vm
         Name        osp-spring-boot
         Format      regex
-        Regex       /(?<time>\S+) (?<relative>\d+) (?<level>\S+) (?<pid>\d+) --- \[(?<thread>.+)\] (?<logger>\S+) : (?<message>.+)/
+        Regex       ^(?<time>\S+) (?<ms_elapsed>\d+) (?<level>\S+) (?<pid>\d+) --- \[(?<thread>.+)\] (?<emitter>\S+) : (?<message>[\S\s]*)$
+        Types       ms_elapsed:integer pid:integer
         Time_Key    time
-        Time_Format %FT%T.%L%z
-        Types       relative:integer pid:integer
+        Time_Format %Y-%m-%dT%H:%M:%S.%L%z
 
 ---
 apiVersion: apps/v1
@@ -156,7 +154,7 @@ spec:
     spec:
       containers:
         - name: fluent-bit
-          image: fluent/fluent-bit:1.5
+          image: fluent/fluent-bit:1.6
           imagePullPolicy: Always
           ports:
             - containerPort: 2020
