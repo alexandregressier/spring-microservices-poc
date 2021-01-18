@@ -29,7 +29,7 @@ spec:
               name: http
           env:
             - name: SPRING_PROFILES_ACTIVE
-              value: dev
+              value: k8s,dev
 #          readinessProbe:
 #            httpGet:
 #              path: /actuator/health

@@ -1,23 +1,39 @@
 spring:
   application:
     name: config-service
-  profiles:
-    active:
-      - default
-      - native
+
+---
+spring:
+  config:
+    activate.on-profile: local
+server:
+  port: 8888
+logging:
+  exception-conversion-word: '%rootException'
+
+---
+spring:
+  config:
+    activate.on-profile: k8s
   main.banner-mode: off
+server:
+  port: 80
+
+---
+spring:
+  config:
+    activate.on-profile: dev
+  profiles:
+    include:
+      - native
   cloud:
     config:
       server:
         native:
           search-locations: classpath:/config
-server:
-  port: 80
-
 logging:
   level:
     root: info
-
 management:
   endpoint:
     health:
@@ -28,11 +44,3 @@ management:
     web:
       exposure:
         include: '*'
-
----
-spring:
-  config:
-    activate.on-profile: default
-  main.banner-mode: console
-server:
-  port: 8888
