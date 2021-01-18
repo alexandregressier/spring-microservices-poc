@@ -13,7 +13,7 @@ spec:
       labels:
         app: osp-license-service
       annotations:
-        fluentbit.io/parser: spring-boot
+        fluentbit.io/parser: osp-spring-boot
     spec:
       initContainers:
         - name: wait-for-200
