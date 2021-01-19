@@ -4,7 +4,8 @@ include(
     "meta-services:osp-config-service",
     "meta-services:osp-eureka-service",
 
-    "services:osp-license-service"
+    "services:osp-license-service",
+    "services:osp-organization-service"
 )
 
 // Spring Snapshot Repository
