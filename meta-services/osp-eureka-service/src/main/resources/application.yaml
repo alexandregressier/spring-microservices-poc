@@ -1,6 +1,10 @@
 spring:
   application:
     name: eureka-service
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
 
 ---
 spring:
@@ -11,6 +15,10 @@ server:
   port: 8761
 logging:
   exception-conversion-word: '%rootException'
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:${server.port}/eureka/
 
 ---
 spring:
@@ -23,6 +31,10 @@ server:
 logging:
   pattern:
     console: "%date{yyyy-MM-dd'T'HH:mm:ss.SSSXXX, UTC} %relative %level ${PID} --- [%thread] %logger : %message%n%rootException"
+eureka:
+  client:
+    service-url:
+      defaultZone: http://osp-eureka-service:${server.port}/eureka/
 
 ---
 spring:
@@ -41,3 +53,6 @@ management:
     web:
       exposure:
         include: '*'
+eureka:
+  server:
+    wait-time-in-ms-when-sync-empty: 5
