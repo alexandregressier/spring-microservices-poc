@@ -2,6 +2,7 @@ rootProject.name = "optima-stock-platform"
 
 include(
     "meta-services:osp-config-service",
+    "meta-services:osp-eureka-service",
 
     "services:osp-license-service"
 )

@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: eureka-service
+
+---
+spring:
+  config:
+    activate.on-profile: local
+    import: optional:configserver:http://localhost:8888
+server:
+  port: 8761
+logging:
+  exception-conversion-word: '%rootException'
+
+---
+spring:
+  config:
+    activate.on-profile: k8s
+    import: configserver:http://osp-config-service
+  main.banner-mode: off
+server:
+  port: 80
+logging:
+  pattern:
+    console: "%date{yyyy-MM-dd'T'HH:mm:ss.SSSXXX, UTC} %relative %level ${PID} --- [%thread] %logger : %message%n%rootException"
+
+---
+spring:
+  config:
+    activate.on-profile: dev
+logging:
+  level:
+    root: info
+management:
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
