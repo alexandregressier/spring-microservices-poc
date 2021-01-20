@@ -74,6 +74,7 @@ class LicenseController {
 
     @DeleteMapping("/{licenseId}")
     fun deleteEmployee(@PathVariable licenseId: UUID): ResponseEntity<EntityModel<License>> {
+        if (!repository.existsById(licenseId)) throw ResponseStatusException(HttpStatus.NOT_FOUND)
         repository.deleteById(licenseId)
         return ResponseEntity.noContent().build()
     }
