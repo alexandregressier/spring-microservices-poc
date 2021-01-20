@@ -26,7 +26,11 @@ class LicenseController {
 
     @PostMapping
     fun createLicense(@RequestBody license: License): ResponseEntity<EntityModel<License>> {
-        val model = assembler.toModel(repository.save(license.copy(comment = license.comment ?: comment)))
+        val model = assembler.toModel(repository.save(
+            license.copy(
+                id = UUID.randomUUID(),
+                comment = license.comment ?: comment
+            )))
         return ResponseEntity
             .created(model.getRequiredLink(IanaLinkRelations.SELF).toUri())
             .body(model)
