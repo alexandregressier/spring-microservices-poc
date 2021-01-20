@@ -12,7 +12,7 @@ build:
 
     - image: gressier/osp-eureka-service
       custom:
-        buildCommand: ./gradlew meta-services:osp-config-service:bootBuildImage --imageName "$IMAGE"
+        buildCommand: ./gradlew meta-services:osp-eureka-service:bootBuildImage --imageName "$IMAGE"
 
     # Services
     - image: gressier/osp-license-service

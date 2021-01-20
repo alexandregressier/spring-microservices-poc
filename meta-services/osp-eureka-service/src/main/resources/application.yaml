@@ -2,9 +2,8 @@ spring:
   application:
     name: eureka-service
 eureka:
-  client:
-    register-with-eureka: false
-    fetch-registry: false
+  instance:
+    prefer-ip-address: true
 
 ---
 spring:
@@ -34,7 +33,7 @@ logging:
 eureka:
   client:
     service-url:
-      defaultZone: http://osp-eureka-service:${server.port}/eureka/
+      defaultZone: http://osp-eureka-service/eureka/
 
 ---
 spring:
@@ -56,3 +55,6 @@ management:
 eureka:
   server:
     wait-time-in-ms-when-sync-empty: 5
+  client:
+    register-with-eureka: false
+    fetch-registry: false

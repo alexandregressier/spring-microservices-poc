@@ -1,6 +1,9 @@
 spring:
   application:
     name: license-service
+eureka:
+  instance:
+    prefer-ip-address: true
 
 ---
 spring:
@@ -11,6 +14,10 @@ server:
   port: 8081
 logging:
   exception-conversion-word: '%rootException'
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
 
 ---
 spring:
@@ -23,6 +30,10 @@ server:
 logging:
   pattern:
     console: "%date{yyyy-MM-dd'T'HH:mm:ss.SSSXXX, UTC} %relative %level ${PID} --- [%thread] %logger : %message%n%rootException"
+eureka:
+  client:
+    service-url:
+      defaultZone: http://osp-eureka-service/eureka/
 
 ---
 spring:
