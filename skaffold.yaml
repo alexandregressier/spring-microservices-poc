@@ -5,6 +5,7 @@ metadata:
 
 build:
   artifacts:
+    # Meta Services
     - image: gressier/osp-config-service
       custom:
         buildCommand: ./gradlew meta-services:osp-config-service:bootBuildImage --imageName "$IMAGE"
@@ -13,7 +14,7 @@ build:
       custom:
         buildCommand: ./gradlew meta-services:osp-config-service:bootBuildImage --imageName "$IMAGE"
 
-
+    # Services
     - image: gressier/osp-license-service
       custom:
         buildCommand: ./gradlew services:osp-license-service:bootBuildImage --imageName "$IMAGE"

@@ -1,0 +1,33 @@
+###
+POST {{organizationService}}/organizations
+Content-Type: application/json
+
+{
+  "name": "Bazqux Inc.",
+  "contactName": "Jane Doe",
+  "contactEmail": "jane.doe@example.org",
+  "contactPhone": "+1-512-555-0121"
+}
+> {% client.global.set("organizationId", response.body.id) %}
+
+###
+GET {{organizationService}}/organizations
+Accept: application/json
+
+###
+GET {{organizationService}}/organizations/{{organizationId}}
+Accept: application/json
+
+###
+PUT {{organizationService}}/organizations/{{organizationId}}
+Content-Type: application/json
+
+{
+  "name": "Bazqux Inc.",
+  "contactName": "Jane Doe",
+  "contactEmail": "jane@example.org",
+  "contactPhone": "+1-404-555-0111"
+}
+
+###
+DELETE {{organizationService}}/organizations/{{organizationId}}
