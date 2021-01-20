@@ -103,7 +103,6 @@ data:
         Skip_Long_Lines    On
         Refresh_Interval   10
 
-  # TODO: find out why the named capturing groups in the `spring-boot-1st-line` regex make multiline logging work
   parsers.conf: |
     [PARSER]
         Name        docker
@@ -113,16 +112,16 @@ data:
         Time_Keep   On
 
     [PARSER]
-        # https://rubular.com/r/ix3MByns9I4OjW
+        # https://rubular.com/r/EuBjDRPg72Y7y8
         Name        spring-boot-1st-line
         Format      regex
-        Regex       ^{"log":"(?<time>\S+) (?<ms_elapsed>\d+) (?<level>\S+) (?<pid>\d+) --- \[(?<thread>.+)\] (?<emitter>\S+) : (?<message>.*?)"
+        Regex       (?<log>^{"log":"\S+ \d+ \S+ \d+ --- \[.+?\] \S+ : .*)
 
     [PARSER]
-        # https://rubular.com/r/GxEOFX1ZQlY2vm
+        # https://rubular.com/r/R7BfnJawx0NxjA
         Name        osp-spring-boot
         Format      regex
-        Regex       ^(?<time>\S+) (?<ms_elapsed>\d+) (?<level>\S+) (?<pid>\d+) --- \[(?<thread>.+)\] (?<emitter>\S+) : (?<message>[\S\s]*)$
+        Regex       ^(?<time>\S+) (?<ms_elapsed>\d+) (?<level>\S+) (?<pid>\d+) --- \[(?<thread>.+?)\] (?<emitter>\S+) : (?<message>[\S\s]*)$
         Types       ms_elapsed:integer pid:integer
         Time_Key    time
         Time_Format %Y-%m-%dT%H:%M:%S.%L%z
