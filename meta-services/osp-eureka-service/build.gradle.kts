@@ -36,6 +36,7 @@ dependencies {
 
     // Spring Cloud Discovery
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-server")
+    implementation("com.github.ben-manes.caffeine:caffeine:2.8.8")
 }
 
 dependencyManagement {
