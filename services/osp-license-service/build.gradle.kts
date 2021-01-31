@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     // Kotlin
     kotlin("jvm")
+    kotlin("kapt")
     kotlin("plugin.spring")
     kotlin("plugin.jpa")
 
@@ -48,6 +49,7 @@ dependencies {
     runtimeOnly("com.h2database:h2")
 
     // Development
+    kapt("org.springframework.boot:spring-boot-configuration-processor")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 
     // Tests
