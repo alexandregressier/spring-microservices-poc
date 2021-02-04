@@ -25,6 +25,7 @@ class LoadDatabase {
                 description = "The Capable & Ergonomic Java IDE",
                 comment = comment,
                 type = License.Type.ENTERPRISE,
+                organizationId = UUID.fromString("564ee6da-dfc2-4aa0-976f-a49a5650f57d"),
             ))}"
         }
         log.info { "Preloading ${repository.save(
@@ -34,6 +35,7 @@ class LoadDatabase {
                 description = "The digital design toolkit",
                 comment = comment,
                 type = License.Type.STANDARD,
+                organizationId = UUID.fromString("564ee6da-dfc2-4aa0-976f-a49a5650f57d"),
             ))}"
         }
     }

@@ -63,6 +63,7 @@ class LicenseController {
                         description = newLicense.description,
                         comment = newLicense.comment ?: comment,
                         type = newLicense.type,
+                        organizationId = it.organizationId,
                     ))
             }.orElseGet {
                 repository.save(newLicense.copy(id = licenseId))
