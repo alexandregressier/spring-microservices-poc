@@ -3,6 +3,7 @@ package dev.gressier.osp.services.license.controller
 import dev.gressier.osp.services.license.config.Config
 import dev.gressier.osp.services.license.config.Config.ServiceClientType.*
 import dev.gressier.osp.services.license.controller.client.OrganizationDiscoveryClient
+import dev.gressier.osp.services.license.controller.client.OrganizationFeignClient
 import dev.gressier.osp.services.license.controller.client.OrganizationRestClient
 import dev.gressier.osp.services.license.model.License
 import dev.gressier.osp.services.license.model.Organization
@@ -29,6 +30,7 @@ class LicenseController {
     @Autowired private lateinit var config: Config
     @Autowired private lateinit var organizationDiscoveryClient: OrganizationDiscoveryClient
     @Autowired private lateinit var organizationRestClient: OrganizationRestClient
+    @Autowired private lateinit var organizationFeignClient: OrganizationFeignClient
 
     @Value("\${example.property:None}") private lateinit var comment: String
 
@@ -129,6 +131,6 @@ class LicenseController {
         when (config.serviceClientType) {
             DISCOVERY -> organizationDiscoveryClient.getOrganization(id)
             REST -> organizationRestClient.getOrganization(id)
-            FEIGN -> TODO()
+            FEIGN -> organizationFeignClient.getOrganization(id)
         }
 }
