@@ -13,9 +13,7 @@ class LicenseModelAssembler : RepresentationModelAssembler<License, EntityModel<
     override fun toModel(license: License): EntityModel<License> =
         EntityModel.of(
             license,
-            listOfNotNull(
-                license.id?.let { linkTo(methodOn(LicenseController::class.java).getLicense(it)).withSelfRel() },
-                linkTo(methodOn(LicenseController::class.java).getLicenses()).withRel("all"),
-            )
+            linkTo(methodOn(LicenseController::class.java).getLicense(license.organizationId!!, license.id!!)).withSelfRel(),
+            linkTo(methodOn(LicenseController::class.java).getLicenses(license.organizationId!!)).withRel("all"),
         )
 }

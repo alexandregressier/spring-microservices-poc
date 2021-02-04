@@ -1,5 +1,5 @@
 ###
-POST {{licenseService}}/licenses
+POST {{licenseService}}/organizations/{{organizationId}}/licenses
 Content-Type: application/json
 
 {
@@ -10,15 +10,15 @@ Content-Type: application/json
 > {% client.global.set("licenseId", response.body.id) %}
 
 ###
-GET {{licenseService}}/licenses
+GET {{licenseService}}/organizations/{{organizationId}}/licenses
 Accept: application/json
 
 ###
-GET {{licenseService}}/licenses/{{licenseId}}
+GET {{licenseService}}/organizations/{{organizationId}}/licenses/{{licenseId}}
 Accept: application/json
 
 ###
-PUT {{licenseService}}/licenses/{{licenseId}}
+PUT {{licenseService}}/organizations/{{organizationId}}/licenses/{{licenseId}}
 Content-Type: application/json
 
 {
@@ -28,4 +28,4 @@ Content-Type: application/json
 }
 
 ###
-DELETE {{licenseService}}/licenses/{{licenseId}}
+DELETE {{licenseService}}/organizations/{{organizationId}}/licenses/{{licenseId}}
