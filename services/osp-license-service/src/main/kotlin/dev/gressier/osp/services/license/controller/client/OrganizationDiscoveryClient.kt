@@ -10,11 +10,11 @@ import java.util.*
 @Component
 class OrganizationDiscoveryClient {
 
-    @Autowired
-    private lateinit var discoveryClient: DiscoveryClient
+    @Autowired private lateinit var discoveryClient: DiscoveryClient
 
-    fun getOrganization(id: UUID): Optional<Organization> =
+    fun getOrganization(id: UUID): Organization? =
         discoveryClient.getInstances("organization-service").stream()
             .findFirst()
             .map { RestTemplate().getForObject("${it.uri}/organizations/{id}", Organization::class.java, id) }
+            .orElse(null)
 }
