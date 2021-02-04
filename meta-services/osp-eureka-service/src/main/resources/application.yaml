@@ -54,7 +54,7 @@ management:
         include: '*'
 eureka:
   server:
-    wait-time-in-ms-when-sync-empty: 5
+    wait-time-in-ms-when-sync-empty: 5000
   client:
     register-with-eureka: false
     fetch-registry: false
