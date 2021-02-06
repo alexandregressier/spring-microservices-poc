@@ -15,13 +15,14 @@ build:
         buildCommand: ./gradlew meta-services:osp-eureka-service:bootBuildImage --imageName "$IMAGE"
 
     # Services
+    - image: gressier/osp-organization-service
+      custom:
+        buildCommand: ./gradlew services:osp-organization-service:bootBuildImage --imageName "$IMAGE"
+
     - image: gressier/osp-license-service
       custom:
         buildCommand: ./gradlew services:osp-license-service:bootBuildImage --imageName "$IMAGE"
 
-    - image: gressier/osp-organization-service
-      custom:
-        buildCommand: ./gradlew services:osp-organization-service:bootBuildImage --imageName "$IMAGE"
 
 deploy:
   kubectl:
