@@ -46,7 +46,6 @@ class OrganizationController {
         @PathVariable organizationId: UUID,
         @RequestBody newOrganization: Organization,
     ): ResponseEntity<EntityModel<Organization>> {
-
         val model = assembler.toModel(
             repository.findById(organizationId).map {
                 repository.save(
