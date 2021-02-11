@@ -5,6 +5,11 @@ eureka:
   instance:
     prefer-ip-address: true
 resilience4j:
+  bulkhead:
+    instances:
+      getOrganization:
+        maxConcurrentCalls: 150
+        maxWaitDuration: 500ms
   circuitbreaker:
     instances:
       getOrganization:

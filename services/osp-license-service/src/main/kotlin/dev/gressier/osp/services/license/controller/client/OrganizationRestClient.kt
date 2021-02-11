@@ -1,6 +1,7 @@
 package dev.gressier.osp.services.license.controller.client
 
 import dev.gressier.osp.services.license.model.Organization
+import io.github.resilience4j.bulkhead.annotation.Bulkhead
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker
 import io.github.resilience4j.retry.annotation.Retry
 import org.springframework.beans.factory.annotation.Autowired
@@ -15,6 +16,7 @@ class OrganizationRestClient {
 
     @Retry(name = "#root.methodName")
     @CircuitBreaker(name = "#root.methodName")
+    @Bulkhead(name = "#root.methodName")
     fun getOrganization(id: UUID): Organization? =
         restTemplate.getForObject("http://organization-service/organizations/{id}", Organization::class.java, id)
 
