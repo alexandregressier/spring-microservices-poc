@@ -25,9 +25,9 @@ import java.util.*
 @RequestMapping("/organizations/{organizationId}/licenses")
 class LicenseController {
 
+    @Autowired private lateinit var config: Config
     @Autowired private lateinit var repository: LicenseRepository
     @Autowired private lateinit var assembler: LicenseModelAssembler
-    @Autowired private lateinit var config: Config
     @Autowired private lateinit var organizationDiscoveryClient: OrganizationDiscoveryClient
     @Autowired private lateinit var organizationRestClient: OrganizationRestClient
     @Autowired private lateinit var organizationFeignClient: OrganizationFeignClient
