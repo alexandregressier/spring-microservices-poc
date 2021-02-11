@@ -1,7 +1,9 @@
 package dev.gressier.osp.services.organization.controller
 
+import dev.gressier.osp.services.organization.config.Config
 import dev.gressier.osp.services.organization.model.Organization
 import dev.gressier.osp.services.organization.repository.OrganizationRepository
+import dev.gressier.osp.services.organization.timeOutOnceIn
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.hateoas.CollectionModel
 import org.springframework.hateoas.EntityModel
@@ -18,6 +20,7 @@ import java.util.*
 @RequestMapping("/organizations")
 class OrganizationController {
 
+    @Autowired private lateinit var config: Config
     @Autowired private lateinit var repository: OrganizationRepository
     @Autowired private lateinit var assembler: OrganizationModelAssembler
 
@@ -37,9 +40,11 @@ class OrganizationController {
         )
 
     @GetMapping("/{organizationId}")
-    fun getOrganization(@PathVariable organizationId: UUID): EntityModel<Organization> =
-        repository.findById(organizationId).map(assembler::toModel)
+    fun getOrganization(@PathVariable organizationId: UUID): EntityModel<Organization> {
+        config.getOrganizationTimeOutOnceIn?.let { timeOutOnceIn(it) }
+        return repository.findById(organizationId).map(assembler::toModel)
             .orElseThrow { ResponseStatusException(HttpStatus.NOT_FOUND) }
+    }
 
     @PutMapping("/{organizationId}")
     fun replaceOrganization(
