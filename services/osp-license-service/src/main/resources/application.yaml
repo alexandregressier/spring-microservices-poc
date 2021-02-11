@@ -4,6 +4,20 @@ spring:
 eureka:
   instance:
     prefer-ip-address: true
+resilience4j:
+  circuitbreaker:
+    instances:
+      getOrganization:
+        registerHealthIndicator: true
+        ringBufferSizeInClosedState: 5
+        failureRateThreshold: 60
+        waitDurationInOpenState: 15s
+        ringBufferSizeInHalfOpenState: 3
+        recordExceptions:
+          - org.springframework.web.client.HttpServerErrorException
+          - org.springframework.web.client.ResourceAccessException
+          - java.util.concurrent.TimeoutException
+          - java.io.IOException
 
 ---
 spring:
@@ -52,3 +66,6 @@ management:
     web:
       exposure:
         include: '*'
+  health:
+    circuitbreakers:
+      enabled: true
