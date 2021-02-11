@@ -10,6 +10,12 @@ resilience4j:
       getOrganization:
         maxConcurrentCalls: 150
         maxWaitDuration: 500ms
+  ratelimiter:
+    instances:
+      getOrganization:
+        limitRefreshPeriod: 1ms
+        limitForPeriod: 10
+        timeoutDuration: 25ms
   circuitbreaker:
     instances:
       getOrganization:
