@@ -15,7 +15,7 @@ class OrganizationRestClient {
 
     @Autowired private lateinit var restTemplate: RestTemplate
 
-    @Retry(name = "#root.methodName")
+    @Retry(name = "#root.methodName", fallbackMethod = "buildBlankOrganization")
     @CircuitBreaker(name = "#root.methodName")
     @RateLimiter(name = "#root.methodName")
     @Bulkhead(name = "#root.methodName")
