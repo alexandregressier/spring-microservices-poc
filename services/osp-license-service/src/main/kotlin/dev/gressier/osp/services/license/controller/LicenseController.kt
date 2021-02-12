@@ -39,9 +39,6 @@ class LicenseController {
         @PathVariable organizationId: UUID,
         @RequestBody license: License,
     ): ResponseEntity<EntityModel<License>> {
-        if (!doesOrganizationExist(organizationId)) throw ResponseStatusException(
-            HttpStatus.NOT_FOUND, "Organization with id `$organizationId` not found"
-        )
         val model = assembler.toModel(
             repository.save(
                 license.copy(
@@ -57,27 +54,22 @@ class LicenseController {
     }
 
     @GetMapping
-    fun getLicenses(@PathVariable organizationId: UUID): CollectionModel<EntityModel<License>> {
-        return CollectionModel.of(
+    fun getLicenses(@PathVariable organizationId: UUID): CollectionModel<EntityModel<License>> =
+        CollectionModel.of(
             repository.findAll()
                 .map { it.copy(organization = findOrganization(organizationId)) }
                 .map(assembler::toModel),
             linkTo(methodOn(LicenseController::class.java).getLicenses(organizationId)).withSelfRel(),
         )
-    }
 
     @GetMapping("/{licenseId}")
-    fun getLicense(@PathVariable organizationId: UUID, @PathVariable licenseId: UUID): EntityModel<License> {
-        if (!doesOrganizationExist(organizationId)) throw ResponseStatusException(
-            HttpStatus.NOT_FOUND, "Organization with id `$organizationId` not found"
-        )
-        return repository.findById(licenseId)
+    fun getLicense(@PathVariable organizationId: UUID, @PathVariable licenseId: UUID): EntityModel<License> =
+        repository.findById(licenseId)
             .map { it.copy(organization = findOrganization(organizationId)) }
             .map(assembler::toModel)
             .orElseThrow { throw ResponseStatusException(
                 HttpStatus.NOT_FOUND, "License with id `$licenseId` not found"
             ) }
-    }
 
     @PutMapping("/{licenseId}")
     fun replaceLicense(
@@ -85,9 +77,6 @@ class LicenseController {
         @PathVariable licenseId: UUID,
         @RequestBody newLicense: License,
     ): ResponseEntity<EntityModel<License>> {
-        if (!doesOrganizationExist(organizationId)) throw ResponseStatusException(
-            HttpStatus.NOT_FOUND, "Organization with id `$organizationId` not found"
-        )
         val model = assembler.toModel(
             repository.findById(licenseId).map {
                 repository.save(
@@ -114,18 +103,12 @@ class LicenseController {
         @PathVariable organizationId: UUID,
         @PathVariable licenseId: UUID,
     ): ResponseEntity<EntityModel<License>> {
-        if (!doesOrganizationExist(organizationId)) throw ResponseStatusException(
-            HttpStatus.NOT_FOUND, "Organization with id `$organizationId` not found"
-        )
         if (!repository.existsById(licenseId)) throw ResponseStatusException(
             HttpStatus.NOT_FOUND, "License with id `$licenseId` not found"
         )
         repository.deleteById(licenseId)
         return ResponseEntity.noContent().build()
     }
-
-    private fun doesOrganizationExist(id: UUID): Boolean =
-        findOrganization(id) != null
 
     private fun findOrganization(id: UUID): Organization? =
         when (config.serviceClientType) {
