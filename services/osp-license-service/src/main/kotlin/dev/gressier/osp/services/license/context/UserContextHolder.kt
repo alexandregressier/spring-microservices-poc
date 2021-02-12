@@ -4,7 +4,7 @@ object UserContextHolder {
 
     private val localContext = ThreadLocal<UserContext>()
 
-    var context: UserContext?
+    var context: UserContext
         get() = localContext.get()
-        set(context) { context?.let { localContext.set(it) } }
+        set(context) = localContext.set(context)
 }

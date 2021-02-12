@@ -21,7 +21,7 @@ class UserContextFilter : Filter {
                 request.getHeader(UserContext.Header.authToken),
                 request.getHeader(UserContext.Header.organizationId),
             )
-        log.debug("User context: ${UserContextHolder.context}")
+        UserContextHolder.context.let { if (!it.isEmpty()) log.debug("User context: $it") }
         chain?.doFilter(request, response)
     }
 }

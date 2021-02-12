@@ -2,12 +2,14 @@ package dev.gressier.osp.services.license.controller
 
 import dev.gressier.osp.services.license.config.Config
 import dev.gressier.osp.services.license.config.Config.ServiceClientType.*
+import dev.gressier.osp.services.license.context.UserContextHolder
 import dev.gressier.osp.services.license.controller.client.OrganizationDiscoveryClient
 import dev.gressier.osp.services.license.controller.client.OrganizationFeignClient
 import dev.gressier.osp.services.license.controller.client.OrganizationRestClient
 import dev.gressier.osp.services.license.model.License
 import dev.gressier.osp.services.license.model.Organization
 import dev.gressier.osp.services.license.repository.LicenseRepository
+import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.hateoas.CollectionModel
@@ -20,6 +22,8 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
 import java.util.*
+
+private val log = KotlinLogging.logger {}
 
 @RestController
 @RequestMapping("/organizations/{organizationId}/licenses")
@@ -63,13 +67,15 @@ class LicenseController {
         )
 
     @GetMapping("/{licenseId}")
-    fun getLicense(@PathVariable organizationId: UUID, @PathVariable licenseId: UUID): EntityModel<License> =
-        repository.findById(licenseId)
+    fun getLicense(@PathVariable organizationId: UUID, @PathVariable licenseId: UUID): EntityModel<License> {
+        UserContextHolder.context.correlationId?.let { log.debug("GET License - OSP correlation ID = $it") }
+        return repository.findById(licenseId)
             .map { it.copy(organization = findOrganization(organizationId)) }
             .map(assembler::toModel)
             .orElseThrow { throw ResponseStatusException(
                 HttpStatus.NOT_FOUND, "License with id `$licenseId` not found"
             ) }
+    }
 
     @PutMapping("/{licenseId}")
     fun replaceLicense(
