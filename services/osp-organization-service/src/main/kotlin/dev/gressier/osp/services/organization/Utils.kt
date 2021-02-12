@@ -8,7 +8,7 @@ private val log = KotlinLogging.logger {}
 fun timeOutOnceIn(n: Int) {
     if ((1..n).random() == 1) {
         try {
-            Thread.sleep(5_000)
+            Thread.sleep(2_000)
             throw TimeoutException()
         } catch (e: InterruptedException) {
             log.error(e.message)

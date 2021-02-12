@@ -32,7 +32,7 @@ resilience4j:
   retry:
     instances:
       getOrganization:
-        maxRetryAttempts: 3
+        maxRetryAttempts: 5
         waitDuration: 1s
         retryExceptions:
           - org.springframework.web.client.HttpServerErrorException
