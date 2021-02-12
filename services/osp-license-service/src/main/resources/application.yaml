@@ -85,5 +85,7 @@ management:
       exposure:
         include: '*'
   health:
+    ratelimiters:
+      enabled: true
     circuitbreakers:
       enabled: true
