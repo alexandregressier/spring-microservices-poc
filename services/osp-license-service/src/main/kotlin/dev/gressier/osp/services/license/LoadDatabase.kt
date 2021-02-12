@@ -18,7 +18,7 @@ class LoadDatabase {
 
     @Bean
     fun initDatabase(repository: LicenseRepository) = CommandLineRunner {
-        log.info { "Preloading ${repository.save(
+        log.debug { "Preloading ${repository.save(
             License(
                 id = UUID.fromString("bf0fbeac-19ba-452e-8510-32d0251c02f7"),
                 productName = "IntelliJ IDEA",
@@ -28,7 +28,7 @@ class LoadDatabase {
                 organizationId = UUID.fromString("564ee6da-dfc2-4aa0-976f-a49a5650f57d"),
             ))}"
         }
-        log.info { "Preloading ${repository.save(
+        log.debug { "Preloading ${repository.save(
             License(
                 id = UUID.fromString("03318621-8d08-4446-9e6c-8f5ef8146e65"),
                 productName = "Sketch",

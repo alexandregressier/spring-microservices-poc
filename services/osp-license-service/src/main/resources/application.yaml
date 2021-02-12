@@ -74,6 +74,7 @@ spring:
 logging:
   level:
     root: info
+    dev.gressier.osp: debug
 management:
   endpoint:
     health:

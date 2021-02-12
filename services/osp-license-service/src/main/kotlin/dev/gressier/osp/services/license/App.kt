@@ -39,7 +39,7 @@ class App {
     fun customCircuitBreakerRegistryEventConsumer(): RegistryEventConsumer<CircuitBreaker> =
         object : RegistryEventConsumer<CircuitBreaker> {
             override fun onEntryAddedEvent(entryAddedEvent: EntryAddedEvent<CircuitBreaker>) =
-                entryAddedEvent.addedEntry.eventPublisher.onEvent { log.info("$it") }
+                entryAddedEvent.addedEntry.eventPublisher.onEvent { log.debug("$it") }
 
             override fun onEntryRemovedEvent(entryRemoveEvent: EntryRemovedEvent<CircuitBreaker>) {}
             override fun onEntryReplacedEvent(entryReplacedEvent: EntryReplacedEvent<CircuitBreaker>) {}
@@ -50,7 +50,7 @@ class App {
     fun customRetryRegistryEventConsumer(): RegistryEventConsumer<Retry> =
         object : RegistryEventConsumer<Retry> {
             override fun onEntryAddedEvent(entryAddedEvent: EntryAddedEvent<Retry>) =
-                entryAddedEvent.addedEntry.eventPublisher.onEvent { log.info("$it") }
+                entryAddedEvent.addedEntry.eventPublisher.onEvent { log.debug("$it") }
 
             override fun onEntryRemovedEvent(entryRemoveEvent: EntryRemovedEvent<Retry>) {}
             override fun onEntryReplacedEvent(entryReplacedEvent: EntryReplacedEvent<Retry>) {}

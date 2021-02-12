@@ -15,7 +15,7 @@ class LoadDatabase {
 
     @Bean
     fun initDatabase(repository: OrganizationRepository) = CommandLineRunner {
-        log.info { "Preloading ${repository.save(
+        log.debug { "Preloading ${repository.save(
             Organization(
                 id = UUID.fromString("564ee6da-dfc2-4aa0-976f-a49a5650f57d"),
                 name = "G Inc.",
@@ -24,7 +24,7 @@ class LoadDatabase {
                 contactPhone = "+33677889900",
             ))}"
         }
-        log.info { "Preloading ${repository.save(
+        log.debug { "Preloading ${repository.save(
             Organization(
                 id = UUID.fromString("4e979e21-3b14-488c-80d3-2fcacbf38755"),
                 name = "Foobar LLC",
