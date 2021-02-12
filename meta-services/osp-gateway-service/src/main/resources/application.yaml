@@ -1,0 +1,61 @@
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+eureka:
+  instance:
+    prefer-ip-address: true
+
+---
+spring:
+  config:
+    activate.on-profile: local
+    import: optional:configserver:http://localhost:8888
+server:
+  port: 8080
+logging:
+  exception-conversion-word: '%rootException'
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+---
+spring:
+  config:
+    activate.on-profile: k8s
+    import: configserver:http://osp-config-service
+  main.banner-mode: off
+server:
+  port: 80
+logging:
+  pattern:
+    console: "%date{yyyy-MM-dd'T'HH:mm:ss.SSSXXX, UTC} %relative %level ${PID} --- [%thread] %logger : %message%n%rootException"
+eureka:
+  client:
+    service-url:
+      defaultZone: http://osp-eureka-service/eureka/
+
+---
+spring:
+  config:
+    activate.on-profile: dev
+logging:
+  level:
+    root: info
+    dev.gressier.osp: debug
+management:
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'

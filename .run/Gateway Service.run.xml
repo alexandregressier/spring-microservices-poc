@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Gateway Service" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="optima-stock-platform.meta-services.osp-gateway-service.main" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="dev.gressier.osp.meta.services.gateway.App" />
+    <option name="ACTIVE_PROFILES" value="local,dev" />
+    <option name="ALTERNATIVE_JRE_PATH" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

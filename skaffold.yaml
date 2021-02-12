@@ -11,6 +11,9 @@ build:
     - image: gressier/osp-eureka-service
       custom:
         buildCommand: ./gradlew meta-services:osp-eureka-service:bootBuildImage --imageName "$IMAGE"
+    - image: gressier/osp-gateway-service
+      custom:
+        buildCommand: ./gradlew meta-services:osp-gateway-service:bootBuildImage --imageName "$IMAGE"
 
     # Services
     - image: gressier/osp-organization-service
