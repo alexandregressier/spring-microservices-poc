@@ -99,7 +99,7 @@ class LicenseController {
     }
 
     @DeleteMapping("/{licenseId}")
-    fun deleteEmployee(
+    fun deleteLicense(
         @PathVariable organizationId: UUID,
         @PathVariable licenseId: UUID,
     ): ResponseEntity<EntityModel<License>> {
