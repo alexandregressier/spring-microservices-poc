@@ -15,8 +15,8 @@ class UserContextFilter : Filter {
         if (request is HttpServletRequest)
             UserContextHolder.context = UserContext(
                 request.getHeader(UserContext.Header.correlationId),
-                request.getHeader(UserContext.Header.userId),
                 request.getHeader(UserContext.Header.authToken),
+                request.getHeader(UserContext.Header.userId),
                 request.getHeader(UserContext.Header.organizationId),
             )
         UserContextHolder.context.let { if (!it.isEmpty()) log.debug("User context: $it") }
