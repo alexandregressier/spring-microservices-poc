@@ -1,13 +1,13 @@
 package dev.gressier.osp.commons.context
 
 data class UserContext(
-    val correlationId: String?,
-    val authToken: String?,
-    val userId: String?,
-    val organizationId: String?,
+    val correlationId: String? = null,
+    val authToken: String? = null,
+    val userId: String? = null,
+    val organizationId: String? = null,
 ) {
     companion object {
-        val empty = UserContext(null, null, null, null)
+        val empty = UserContext()
     }
 
     object Header {
