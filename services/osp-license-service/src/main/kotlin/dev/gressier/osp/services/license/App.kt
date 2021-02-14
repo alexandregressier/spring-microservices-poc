@@ -1,5 +1,6 @@
 package dev.gressier.osp.services.license
 
+import dev.gressier.osp.commons.context.UserContextFilter
 import dev.gressier.osp.services.license.config.Config
 import io.github.resilience4j.circuitbreaker.CircuitBreaker
 import io.github.resilience4j.core.registry.EntryAddedEvent
@@ -26,7 +27,8 @@ private val log = KotlinLogging.logger {}
 @SpringBootApplication
 class App {
 
-    // RestTemplate with Eureka client
+    @Bean
+    fun userContextFilter() = UserContextFilter()
 
     @LoadBalanced
     @Bean

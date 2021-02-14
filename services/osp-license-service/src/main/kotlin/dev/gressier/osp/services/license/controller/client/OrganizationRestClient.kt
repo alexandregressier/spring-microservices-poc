@@ -1,6 +1,6 @@
 package dev.gressier.osp.services.license.controller.client
 
-import dev.gressier.osp.services.license.context.UserContextHolder
+import dev.gressier.osp.commons.context.UserContextHolder
 import dev.gressier.osp.services.license.model.Organization
 import io.github.resilience4j.bulkhead.annotation.Bulkhead
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker

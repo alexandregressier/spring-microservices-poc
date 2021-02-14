@@ -2,7 +2,7 @@ package dev.gressier.osp.services.license.controller
 
 import dev.gressier.osp.services.license.config.Config
 import dev.gressier.osp.services.license.config.Config.ServiceClientType.*
-import dev.gressier.osp.services.license.context.UserContextHolder
+import dev.gressier.osp.commons.context.UserContextHolder
 import dev.gressier.osp.services.license.controller.client.OrganizationDiscoveryClient
 import dev.gressier.osp.services.license.controller.client.OrganizationFeignClient
 import dev.gressier.osp.services.license.controller.client.OrganizationRestClient

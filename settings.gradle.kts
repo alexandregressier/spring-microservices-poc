@@ -1,6 +1,8 @@
 rootProject.name = "optima-stock-platform"
 
 include(
+    "shared:osp-commons",
+
     "meta-services:osp-config-service",
     "meta-services:osp-eureka-service",
     "meta-services:osp-gateway-service",

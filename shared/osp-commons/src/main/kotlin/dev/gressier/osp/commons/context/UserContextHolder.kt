@@ -1,4 +1,4 @@
-package dev.gressier.osp.services.license.context
+package dev.gressier.osp.commons.context
 
 object UserContextHolder {
 
