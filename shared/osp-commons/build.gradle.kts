@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
@@ -27,7 +28,8 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
     // Spring Web
-    implementation("org.springframework.boot:spring-boot-starter-tomcat")
+    implementation("org.springframework:spring-web")
+    implementation("org.apache.tomcat.embed:tomcat-embed-core")
 
     // Tests
     testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -36,7 +38,7 @@ dependencies {
     implementation("io.github.microutils:kotlin-logging:2.0.4")
 }
 
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs = listOf("-Xjsr305=strict")
         jvmTarget = "${java.sourceCompatibility}"

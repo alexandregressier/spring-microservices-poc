@@ -1,6 +1,7 @@
 package dev.gressier.osp.services.license
 
 import dev.gressier.osp.commons.context.UserContextFilter
+import dev.gressier.osp.commons.context.UserContextInterceptor
 import dev.gressier.osp.services.license.config.Config
 import io.github.resilience4j.circuitbreaker.CircuitBreaker
 import io.github.resilience4j.core.registry.EntryAddedEvent
@@ -33,6 +34,7 @@ class App {
     @LoadBalanced
     @Bean
     fun restTemplate() = RestTemplate()
+        .apply { interceptors.add(UserContextInterceptor()) }
 
     // Resilience4j
 
