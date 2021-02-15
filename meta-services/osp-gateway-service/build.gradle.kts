@@ -28,6 +28,9 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
+    // OSP Commons
+    implementation(project(":shared:osp-commons"))
+
     // Ops
     implementation("org.springframework.boot:spring-boot-starter-actuator")
 
@@ -40,6 +43,9 @@ dependencies {
 
     // Spring Cloud Routing
     implementation("org.springframework.cloud:spring-cloud-starter-gateway")
+
+    // Logging
+    implementation("io.github.microutils:kotlin-logging:2.0.4")
 }
 
 dependencyManagement {
