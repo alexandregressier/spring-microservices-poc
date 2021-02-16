@@ -19,6 +19,7 @@ done
 # EFK
 if [ -z ${NO_EFK+x} ]; then
   pushd deployment/vendor/efk && skaffold run && popd || exit 1
+  kubectl -n efk port-forward service/kibana-kibana 5601:http > /dev/null &
 fi
 
 # CockroachDB
@@ -34,5 +35,6 @@ fi
 
 # OSP Services
 if [ -z ${NO_OSP+x} ]; then
-  skaffold run --port-forward
+  skaffold run
+  kubectl port-forward service/osp-gateway-service 8080:http > /dev/null &
 fi
