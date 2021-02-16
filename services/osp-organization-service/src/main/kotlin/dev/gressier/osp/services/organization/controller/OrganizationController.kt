@@ -1,9 +1,11 @@
 package dev.gressier.osp.services.organization.controller
 
+import dev.gressier.osp.commons.context.UserContextHolder
 import dev.gressier.osp.services.organization.config.Config
 import dev.gressier.osp.services.organization.model.Organization
 import dev.gressier.osp.services.organization.repository.OrganizationRepository
 import dev.gressier.osp.services.organization.timeOutOnceIn
+import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.hateoas.CollectionModel
 import org.springframework.hateoas.EntityModel
@@ -15,6 +17,8 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
 import java.util.*
+
+private val log = KotlinLogging.logger {}
 
 @RestController
 @RequestMapping("/organizations")
@@ -42,6 +46,7 @@ class OrganizationController {
     @GetMapping("/{organizationId}")
     fun getOrganization(@PathVariable organizationId: UUID): EntityModel<Organization> {
         config.getOrganizationTimeOutOnceIn?.let { timeOutOnceIn(it) }
+        UserContextHolder.context.correlationId?.let { log.debug("GET License - OSP correlation ID = $it") }
         return repository.findById(organizationId).map(assembler::toModel)
             .orElseThrow { ResponseStatusException(HttpStatus.NOT_FOUND) }
     }
