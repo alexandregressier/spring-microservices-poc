@@ -1,7 +1,5 @@
 apiVersion: skaffold/v2beta12
 kind: Config
-metadata:
-  name: spring-microservices-poc
 build:
   artifacts:
     # Meta Services
