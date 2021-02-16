@@ -57,6 +57,9 @@ spring:
     activate.on-profile: k8s
     import: configserver:http://osp-config-service
   main.banner-mode: off
+  datasource:
+    url: jdbc:postgresql://cockroachdb-public.cockroachdb:26257/osp_license_service
+    username: osp_license_service_user
 server:
   port: 80
 logging:
@@ -71,6 +74,11 @@ eureka:
 spring:
   config:
     activate.on-profile: dev
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
 logging:
   level:
     root: info

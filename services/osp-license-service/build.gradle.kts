@@ -57,6 +57,7 @@ dependencies {
     // SQL
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     runtimeOnly("com.h2database:h2")
+    runtimeOnly("org.postgresql:postgresql")
 
     // Development
     kapt("org.springframework.boot:spring-boot-configuration-processor")
