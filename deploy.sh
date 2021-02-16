@@ -18,7 +18,7 @@ done
 
 # EFK
 if [ -z ${NO_EFK+x} ]; then
-  skaffold run -f deployment/vendor/efk/skaffold.yaml
+  pushd deployment/vendor/efk && skaffold run && popd || exit 1
 fi
 
 # CockroachDB
