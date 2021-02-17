@@ -27,7 +27,7 @@ spring:
   main.banner-mode: off
   datasource:
     url: jdbc:postgresql://cockroachdb-public.cockroachdb:26257/osp_organization_service
-    username: osp_organization_service_user
+    username: osp_organization_service
 server:
   port: 80
 logging:
