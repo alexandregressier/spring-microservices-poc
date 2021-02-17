@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.CommandLineRunner
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Profile
 import java.util.*
 
 private val log = KotlinLogging.logger {}
@@ -16,6 +17,7 @@ class LoadDatabase {
 
     @Value("\${example.property:None}") private lateinit var comment: String
 
+    @Profile("dev")
     @Bean
     fun initDatabase(repository: LicenseRepository) = CommandLineRunner {
         log.debug { "Preloading ${repository.save(

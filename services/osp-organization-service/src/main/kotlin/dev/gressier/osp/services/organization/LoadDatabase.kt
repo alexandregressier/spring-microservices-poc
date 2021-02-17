@@ -6,6 +6,7 @@ import mu.KotlinLogging
 import org.springframework.boot.CommandLineRunner
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Profile
 import java.util.*
 
 private val log = KotlinLogging.logger {}
@@ -13,6 +14,7 @@ private val log = KotlinLogging.logger {}
 @Configuration
 class LoadDatabase {
 
+    @Profile("dev")
     @Bean
     fun initDatabase(repository: OrganizationRepository) = CommandLineRunner {
         log.debug { "Preloading ${repository.save(
