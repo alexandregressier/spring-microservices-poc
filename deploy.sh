@@ -36,5 +36,6 @@ fi
 # OSP Services
 if [ -z ${NO_OSP+x} ]; then
   skaffold run
+  kubectl port-forward service/osp-eureka-service 8761:http > /dev/null &
   kubectl port-forward service/osp-gateway-service 8080:http > /dev/null &
 fi
