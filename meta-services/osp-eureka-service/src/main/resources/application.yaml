@@ -17,7 +17,7 @@ logging:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:${server.port}/eureka/
+      defaultZone: http://localhost:${server.port}/eureka
 
 ---
 spring:
@@ -33,7 +33,7 @@ logging:
 eureka:
   client:
     service-url:
-      defaultZone: http://osp-eureka-service/eureka/
+      defaultZone: http://osp-eureka-service/eureka
 
 ---
 spring:
