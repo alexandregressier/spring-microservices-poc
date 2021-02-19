@@ -11,7 +11,8 @@ deploy: deploy/efk deploy/cockroachdb deploy/osp
 
 .PHONY: deploy/efk
 deploy/efk:
-	pushd deployment/vendor/efk && skaffold run && popd
+	skaffold run -f deployment/vendor/efk/skaffold.yaml
+	kubectl apply -f deployment/vendor/efk/fluent-bit.yaml
 
 .PHONY: deploy/cockroachdb
 deploy/cockroachdb:
