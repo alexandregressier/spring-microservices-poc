@@ -41,7 +41,7 @@ pf/postgresql:
 
 .PHONY: pf/keycloak
 pf/keycloak:
-	kubectl -n $(NS_KEYCLOAK) port-forward service/keycloak 8787:http
+	kubectl -n $(NS_KEYCLOAK) port-forward service/keycloak 80:http
 
 .PHONY: pf/eureka
 pf/eureka:
