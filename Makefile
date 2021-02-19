@@ -24,19 +24,22 @@ deploy/osp:
 	skaffold run
 
 .PHONY: pf
-pf: pf/efk pf/postgresql pf/osp
+pf: pf/kibana pf/postgresql pf/eureka pf/gateway
 
-.PHONY: pf/efk
-pf/efk:
+.PHONY: pf/kibana
+pf/kibana:
 	kubectl -n $(NS_EFK) port-forward service/kibana-kibana 5601:http
 
 .PHONY: pf/postgresql
 pf/postgresql:
 	kubectl -n $(NS_POSTGRESQL) port-forward service/postgresql 5432:tcp-postgresql
 
-.PHONY: pf/osp
-pf/osp:
+.PHONY: pf/eureka
+pf/eureka:
 	kubectl -n $(NS_OSP) port-forward service/osp-eureka-service 8761:http
+
+.PHONY: pf/gateway
+pf/gateway:
 	kubectl -n $(NS_OSP) port-forward service/osp-gateway-service 8080:http
 
 .PHONY: build
