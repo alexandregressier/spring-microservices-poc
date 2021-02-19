@@ -3,46 +3,41 @@
 GRADLE = ./gradlew
 
 NS_EFK = efk
-NS_COCKROACHDB = cockroachdb
+NS_POSTGRESQL = default
 NS_OSP = default
 
 .PHONY: deploy
-deploy: deploy/efk deploy/cockroachdb deploy/osp
+deploy: deploy/efk deploy/postgresql deploy/osp
 
 .PHONY: deploy/efk
 deploy/efk:
 	skaffold run -f deployment/vendor/efk/skaffold.yaml
 	kubectl apply -f deployment/vendor/efk/fluent-bit.yaml
 
-.PHONY: deploy/cockroachdb
-deploy/cockroachdb:
-	skaffold run -f deployment/vendor/cockroachdb/skaffold.yaml
-	kubectl -n $(NS_COCKROACHDB) wait --for=condition=Ready pod -l app.kubernetes.io/component=cockroachdb \
-		--timeout=60s
-	kubectl -n $(NS_COCKROACHDB) run -i --rm cockroach-client --image=cockroachdb/cockroach --restart=Never \
-		--command -- ./cockroach sql --insecure --host=cockroachdb-public.cockroachdb \
-		< deployment/vendor/cockroachdb/init-db.sql
+.PHONY: deploy/postgresql
+deploy/postgresql:
+	kubectl apply -f deployment/vendor/postgresql/postgresql-init.yaml
+	skaffold run -f deployment/vendor/postgresql/skaffold.yaml
 
 .PHONY: deploy/osp
 deploy/osp:
 	skaffold run
 
 .PHONY: pf
-pf: pf/efk pf/cockroachdb pf/osp
+pf: pf/efk pf/postgresql pf/osp
 
 .PHONY: pf/efk
 pf/efk:
 	kubectl -n $(NS_EFK) port-forward service/kibana-kibana 5601:http
 
-.PHONY: pf/cockroachdb
-pf/cockroachdb:
-	kubectl -n $(NS_COCKROACHDB) port-forward service/cockroachdb-public 26257:grpc 8257:http
+.PHONY: pf/postgresql
+pf/postgresql:
+	kubectl -n $(NS_POSTGRESQL) port-forward service/postgresql 5432:tcp-postgresql
 
 .PHONY: pf/osp
 pf/osp:
 	kubectl -n $(NS_OSP) port-forward service/osp-eureka-service 8761:http
 	kubectl -n $(NS_OSP) port-forward service/osp-gateway-service 8080:http
-
 
 .PHONY: build
 build:

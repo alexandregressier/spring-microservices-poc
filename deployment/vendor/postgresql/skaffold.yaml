@@ -1,0 +1,14 @@
+apiVersion: skaffold/v2beta12
+kind: Config
+deploy:
+  helm:
+    releases:
+      - name: postgresql
+        chartPath: bitnami/postgresql
+        remote: true
+        setValues:
+          service:
+            port: 5432
+          postgresqlUsername: postgres
+          postgresqlPassword: postgres
+          initdbScriptsConfigMap: postgresql-init

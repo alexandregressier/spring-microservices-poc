@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgresql-init
+data:
+  init.sql: |
+    -- OSP Organization Service
+    CREATE DATABASE osp_organization_service;
+    CREATE USER osp_organization_service WITH PASSWORD 'osp_organization_service';
+    GRANT ALL PRIVILEGES ON DATABASE osp_organization_service TO osp_organization_service;
+
+    -- OSP License Service
+    CREATE DATABASE osp_license_service;
+    CREATE USER osp_license_service WITH PASSWORD 'osp_license_service';
+    GRANT ALL PRIVILEGES ON DATABASE osp_license_service TO osp_license_service;

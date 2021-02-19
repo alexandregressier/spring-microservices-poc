@@ -58,8 +58,9 @@ spring:
     import: configserver:http://osp-config-service
   main.banner-mode: off
   datasource:
-    url: jdbc:postgresql://cockroachdb-public.cockroachdb:26257/osp_license_service
+    url: jdbc:postgresql://postgresql:5432/osp_license_service
     username: osp_license_service
+    password: osp_license_service
 server:
   port: 80
 logging:
