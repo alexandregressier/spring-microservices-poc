@@ -4,10 +4,11 @@ GRADLE = ./gradlew
 
 NS_EFK = efk
 NS_POSTGRESQL = default
+NS_KEYCLOAK = default
 NS_OSP = default
 
 .PHONY: deploy
-deploy: deploy/efk deploy/postgresql deploy/osp
+deploy: deploy/postgresql deploy/keycloak deploy/osp
 
 .PHONY: deploy/efk
 deploy/efk:
@@ -19,12 +20,16 @@ deploy/postgresql:
 	kubectl apply -f deployment/vendor/postgresql/postgresql-init.yaml
 	skaffold run -f deployment/vendor/postgresql/skaffold.yaml
 
+.PHONY: deploy/keycloak
+deploy/keycloak:
+	kubectl apply -f deployment/vendor/keycloak/keycloak.yaml
+
 .PHONY: deploy/osp
 deploy/osp:
 	skaffold run
 
 .PHONY: pf
-pf: pf/kibana pf/postgresql pf/eureka pf/gateway
+pf: pf/kibana pf/postgresql pf/keycloak pf/eureka pf/gateway
 
 .PHONY: pf/kibana
 pf/kibana:
@@ -33,6 +38,10 @@ pf/kibana:
 .PHONY: pf/postgresql
 pf/postgresql:
 	kubectl -n $(NS_POSTGRESQL) port-forward service/postgresql 5432:tcp-postgresql
+
+.PHONY: pf/keycloak
+pf/keycloak:
+	kubectl -n $(NS_KEYCLOAK) port-forward service/keycloak 8787:http
 
 .PHONY: pf/eureka
 pf/eureka:
