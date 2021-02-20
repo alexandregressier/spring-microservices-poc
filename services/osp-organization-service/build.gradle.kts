@@ -23,6 +23,7 @@ repositories {
 }
 
 extra["springCloudVersion"] = "2020.0.1-SNAPSHOT"
+extra["keycloakVersion"] = "12.0.3"
 
 dependencies {
     // Kotlin
@@ -43,6 +44,12 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
     implementation("com.github.ben-manes.caffeine:caffeine:2.8.8")
 
+    // Spring Security
+    implementation("org.springframework.boot:spring-boot-starter-security")
+
+    // Keycloak
+    implementation("org.keycloak:keycloak-spring-boot-starter")
+
     // Web
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-hateoas")
@@ -58,6 +65,7 @@ dependencies {
 
     // Tests
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.security:spring-security-test")
 
     // Logging
     implementation("io.github.microutils:kotlin-logging:2.0.4")
@@ -66,6 +74,7 @@ dependencies {
 dependencyManagement {
     imports {
         mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+        mavenBom("org.keycloak.bom:keycloak-adapter-bom:${property("keycloakVersion")}")
     }
 }
 

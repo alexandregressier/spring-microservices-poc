@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
 import java.util.*
+import javax.annotation.security.RolesAllowed
 
 private val log = KotlinLogging.logger {}
 
@@ -28,6 +29,7 @@ class OrganizationController {
     @Autowired private lateinit var repository: OrganizationRepository
     @Autowired private lateinit var assembler: OrganizationModelAssembler
 
+    @RolesAllowed("admin", "user")
     @PostMapping
     fun createOrganization(@RequestBody organization: Organization): ResponseEntity<EntityModel<Organization>> {
         val model = assembler.toModel(repository.save(organization.copy(id = UUID.randomUUID())))
@@ -36,6 +38,7 @@ class OrganizationController {
             .body(model)
     }
 
+    @RolesAllowed("admin", "user")
     @GetMapping
     fun getOrganizations(): CollectionModel<EntityModel<Organization>> =
         CollectionModel.of(
@@ -43,6 +46,7 @@ class OrganizationController {
             linkTo(methodOn(OrganizationController::class.java).getOrganizations()).withSelfRel(),
         )
 
+    @RolesAllowed("admin", "user")
     @GetMapping("/{organizationId}")
     fun getOrganization(@PathVariable organizationId: UUID): EntityModel<Organization> {
         config.getOrganizationTimeOutOnceIn?.let { timeOutOnceIn(it) }
@@ -51,6 +55,7 @@ class OrganizationController {
             .orElseThrow { ResponseStatusException(HttpStatus.NOT_FOUND) }
     }
 
+    @RolesAllowed("admin", "user")
     @PutMapping("/{organizationId}")
     fun replaceOrganization(
         @PathVariable organizationId: UUID,
@@ -74,6 +79,7 @@ class OrganizationController {
             .body(model)
     }
 
+    @RolesAllowed("admin")
     @DeleteMapping("/{organizationId}")
     fun deleteEmployee(@PathVariable organizationId: UUID): ResponseEntity<EntityModel<Organization>> {
         if (!repository.existsById(organizationId)) throw ResponseStatusException(HttpStatus.NOT_FOUND)
