@@ -70,6 +70,15 @@ eureka:
   client:
     service-url:
       defaultZone: http://osp-eureka-service/eureka
+keycloak:
+  auth-server-url: http://keycloak/auth
+  realm: osp
+  resource: osp-web-app
+  credentials:
+    secret: 73819b12-1b0a-40b2-a621-e1d0d8d9a7b6
+  ssl-required: external
+  use-resource-role-mappings: true
+  bearer-only: true
 
 ---
 spring:

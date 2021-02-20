@@ -10,6 +10,7 @@ import io.github.resilience4j.core.registry.EntryReplacedEvent
 import io.github.resilience4j.core.registry.RegistryEventConsumer
 import io.github.resilience4j.retry.Retry
 import mu.KotlinLogging
+import org.keycloak.adapters.springsecurity.client.KeycloakRestTemplate
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.runApplication
@@ -33,8 +34,8 @@ class App {
 
     @LoadBalanced
     @Bean
-    fun restTemplate() = RestTemplate()
-        .apply { interceptors.add(UserContextInterceptor()) }
+    fun restTemplate(keycloakRestTemplate: KeycloakRestTemplate): RestTemplate =
+        keycloakRestTemplate.apply { interceptors.add(UserContextInterceptor()) }
 
     // Resilience4j
 
