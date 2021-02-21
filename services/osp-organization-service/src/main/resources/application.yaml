@@ -29,6 +29,15 @@ spring:
     url: jdbc:postgresql://postgresql:5432/osp_organization_service
     username: osp_organization_service
     password: osp_organization_service
+  cloud:
+    stream:
+      bindings:
+        output:
+          destination: organization-change-topic
+          content-type: application/json
+      kafka:
+        binder:
+          brokers: kafka
 server:
   port: 80
 logging:

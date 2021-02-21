@@ -57,6 +57,9 @@ dependencies {
     // Keycloak
     implementation("org.keycloak:keycloak-spring-boot-starter")
 
+    // Messaging
+    implementation("org.springframework.cloud:spring-cloud-starter-stream-kafka")
+
     // Web
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-hateoas")

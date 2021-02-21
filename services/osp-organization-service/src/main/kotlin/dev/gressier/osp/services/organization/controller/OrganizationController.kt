@@ -2,6 +2,8 @@ package dev.gressier.osp.services.organization.controller
 
 import dev.gressier.osp.commons.context.UserContextHolder
 import dev.gressier.osp.services.organization.config.Config
+import dev.gressier.osp.services.organization.message.OrganizationChangeMessage.Change
+import dev.gressier.osp.services.organization.message.OrganizationMessageSource
 import dev.gressier.osp.services.organization.model.Organization
 import dev.gressier.osp.services.organization.repository.OrganizationRepository
 import dev.gressier.osp.services.organization.timeOutOnceIn
@@ -28,6 +30,7 @@ class OrganizationController {
     @Autowired private lateinit var config: Config
     @Autowired private lateinit var repository: OrganizationRepository
     @Autowired private lateinit var assembler: OrganizationModelAssembler
+    @Autowired private lateinit var messageSource: OrganizationMessageSource
 
     @RolesAllowed("admin", "user")
     @PostMapping
@@ -36,6 +39,7 @@ class OrganizationController {
         return ResponseEntity
             .created(model.getRequiredLink(IanaLinkRelations.SELF).toUri())
             .body(model)
+            .also { model.content?.id?.let { messageSource.source(Change.CREATE, it) } }
     }
 
     @RolesAllowed("admin", "user")
@@ -77,6 +81,7 @@ class OrganizationController {
         return ResponseEntity
             .created(model.getRequiredLink(IanaLinkRelations.SELF).toUri())
             .body(model)
+            .also { model.content?.id?.let { messageSource.source(Change.REPLACE, it) } }
     }
 
     @RolesAllowed("admin")
@@ -84,6 +89,7 @@ class OrganizationController {
     fun deleteEmployee(@PathVariable organizationId: UUID): ResponseEntity<EntityModel<Organization>> {
         if (!repository.existsById(organizationId)) throw ResponseStatusException(HttpStatus.NOT_FOUND)
         repository.deleteById(organizationId)
+        messageSource.source(Change.DELETE, organizationId)
         return ResponseEntity.noContent().build()
     }
 }
