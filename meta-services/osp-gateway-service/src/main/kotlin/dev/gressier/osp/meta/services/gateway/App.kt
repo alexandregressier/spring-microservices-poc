@@ -9,6 +9,7 @@ import org.springframework.cloud.gateway.filter.GatewayFilterChain
 import org.springframework.cloud.gateway.filter.GlobalFilter
 import org.springframework.context.annotation.Bean
 import org.springframework.core.annotation.Order
+import org.springframework.http.HttpHeaders
 import org.springframework.web.server.ServerWebExchange
 import reactor.core.publisher.Mono
 import java.util.*
@@ -22,7 +23,7 @@ class App {
     @Bean
     @Order(1)
     fun correlationIdFilter() = GlobalFilter { exchange: ServerWebExchange, chain: GatewayFilterChain ->
-        exchange.request.headers.getFirst(UserContext.Header.correlationId)?.let {
+        exchange.request.headers.getFirst(UserContext.Header.CORRELATION_ID)?.let {
             log.debug("Correlation Pre Filter - Found OSP correlation ID = $it")
         } ?: run {
             val uuid = UUID.randomUUID()
@@ -32,8 +33,8 @@ class App {
             log.debug("Correlation Pre Filter - Generated OSP correlation ID = $uuid")
         }
         chain.filter(exchange).then(Mono.fromRunnable {
-            exchange.request.headers[UserContext.Header.correlationId]?.first()?.let {
-                exchange.response.headers.add(UserContext.Header.correlationId, it)
+            exchange.request.headers[UserContext.Header.CORRELATION_ID]?.first()?.let {
+                exchange.response.headers.add(UserContext.Header.CORRELATION_ID, it)
                 log.debug("Correlation Post Filter - Returned OSP correlation ID = $it")
             }
         })

@@ -18,7 +18,7 @@ class UserContextInterceptor: ClientHttpRequestInterceptor {
         request.headers.apply {
             UserContextHolder.context.correlationId?.let {
                 log.debug("Propagating OSP correlation ID = $it")
-                add(UserContext.Header.correlationId, it)
+                add(UserContext.Header.CORRELATION_ID, it)
             }
         }
         return execution.execute(request, body)

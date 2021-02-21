@@ -8,7 +8,7 @@ data class UserContext(
     }
 
     object Header {
-        const val correlationId = "osp-correlation-id"
+        const val CORRELATION_ID = "osp-correlation-id"
     }
 
     fun isEmpty() = this == empty

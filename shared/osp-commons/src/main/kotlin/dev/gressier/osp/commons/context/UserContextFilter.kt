@@ -14,7 +14,7 @@ class UserContextFilter : Filter {
     override fun doFilter(request: ServletRequest?, response: ServletResponse?, chain: FilterChain?) {
         if (request is HttpServletRequest)
             UserContextHolder.context = UserContext(
-                request.getHeader(UserContext.Header.correlationId),
+                request.getHeader(UserContext.Header.CORRELATION_ID),
             )
         UserContextHolder.context.let { if (!it.isEmpty()) log.debug("User context: $it") }
         chain?.doFilter(request, response)
