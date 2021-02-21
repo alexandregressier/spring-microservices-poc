@@ -1,0 +1,8 @@
+apiVersion: skaffold/v2beta12
+kind: Config
+deploy:
+  helm:
+    releases:
+      - name: kafka
+        chartPath: bitnami/kafka
+        remote: true

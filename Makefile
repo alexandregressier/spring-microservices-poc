@@ -5,10 +5,12 @@ GRADLE = ./gradlew
 NS_EFK = efk
 NS_POSTGRESQL = default
 NS_KEYCLOAK = default
+NS_KAFKA = default
 NS_OSP = default
 
+
 .PHONY: deploy
-deploy: deploy/postgresql deploy/keycloak deploy/osp
+deploy: deploy/postgresql deploy/keycloak deploy/kafka deploy/osp
 
 .PHONY: deploy/efk
 deploy/efk:
@@ -24,12 +26,17 @@ deploy/postgresql:
 deploy/keycloak:
 	kubectl apply -f deployment/vendor/keycloak/keycloak.yaml
 
+.PHONY: deploy/kafka
+deploy/kafka:
+	skaffold run -f deployment/vendor/kafka/skaffold.yaml
+
 .PHONY: deploy/osp
 deploy/osp:
 	skaffold run
 
+
 .PHONY: pf
-pf: pf/kibana pf/postgresql pf/keycloak pf/eureka pf/gateway
+pf: pf/kibana pf/postgresql pf/keycloak pf/kafka pf/eureka pf/gateway
 
 .PHONY: pf/kibana
 pf/kibana:
@@ -43,6 +50,10 @@ pf/postgresql:
 pf/keycloak:
 	kubectl -n $(NS_KEYCLOAK) port-forward service/keycloak 80:http
 
+.PHONY: pf/kafka
+pf/kafka:
+	kubectl -n $(NS_KAFKA) port-forward service/kafka 9092:tcp-client
+
 .PHONY: pf/eureka
 pf/eureka:
 	kubectl -n $(NS_OSP) port-forward service/osp-eureka-service 8761:http
@@ -50,6 +61,7 @@ pf/eureka:
 .PHONY: pf/gateway
 pf/gateway:
 	kubectl -n $(NS_OSP) port-forward service/osp-gateway-service 8080:http
+
 
 .PHONY: build
 build:
