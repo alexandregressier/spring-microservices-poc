@@ -1,5 +1,7 @@
 package dev.gressier.osp.meta.services.gateway
 
+import com.nimbusds.jwt.JWTParser
+import com.nimbusds.jwt.SignedJWT
 import dev.gressier.osp.commons.context.UserContext
 import mu.KotlinLogging
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -38,6 +40,25 @@ class App {
                 log.debug("Correlation Post Filter - Returned OSP correlation ID = $it")
             }
         })
+    }
+
+    @Bean
+    @Order(2)
+    fun usernameFilter() = GlobalFilter { exchange: ServerWebExchange, chain: GatewayFilterChain ->
+        exchange.request.headers.getFirst(HttpHeaders.AUTHORIZATION)?.let {
+            kotlin.runCatching {
+                Regex("Bearer (\\S+)").find(it)?.destructured?.let { (accessToken) ->
+                    (JWTParser.parse(accessToken) as? SignedJWT)?.run {
+                        payload.toJSONObject()["preferred_username"] as? String
+                            ?: throw ClassCastException("`preferred_username` is not a string")
+                    } ?: throw Exception("Access token is unsigned")
+                } ?: throw Exception("`Authorization` HTTP header is not prefixed with `Bearer `")
+            }.fold(
+                { username -> log.debug("Username Pre Filter - Authenticated request from $username") },
+                { log.warn("Username Pre Filter - Unable to read username from access token", it) },
+            )
+        }
+        chain.filter(exchange)
     }
 }
 

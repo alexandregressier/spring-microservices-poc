@@ -44,6 +44,9 @@ dependencies {
     // Spring Cloud Routing
     implementation("org.springframework.cloud:spring-cloud-starter-gateway")
 
+    // JWT
+    implementation("com.nimbusds:nimbus-jose-jwt")
+
     // Logging
     implementation("io.github.microutils:kotlin-logging:2.0.4")
 }
