@@ -20,10 +20,6 @@ class UserContextInterceptor: ClientHttpRequestInterceptor {
                 log.debug("Propagating OSP correlation ID = $it")
                 add(UserContext.Header.correlationId, it)
             }
-            UserContextHolder.context.authToken?.let {
-                log.debug("Propagating OSP auth token = $it")
-                add(UserContext.Header.authToken, it)
-            }
         }
         return execution.execute(request, body)
     }
