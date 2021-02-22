@@ -6,11 +6,12 @@ NS_EFK = efk
 NS_POSTGRESQL = default
 NS_KEYCLOAK = default
 NS_KAFKA = default
+NS_REDIS = default
 NS_OSP = default
 
 
 .PHONY: deploy
-deploy: deploy/postgresql deploy/keycloak deploy/kafka deploy/osp
+deploy: deploy/postgresql deploy/keycloak deploy/kafka deploy/redis deploy/osp
 
 .PHONY: deploy/efk
 deploy/efk:
@@ -30,6 +31,10 @@ deploy/keycloak:
 deploy/kafka:
 	skaffold run -f deployment/vendor/kafka/skaffold.yaml
 
+.PHONY: deploy/redis
+deploy/redis:
+	skaffold run -f deployment/vendor/redis/skaffold.yaml
+
 .PHONY: deploy/osp
 deploy/osp: deploy/meta-services deploy/services
 .PHONY: deploy/meta-services
@@ -39,7 +44,7 @@ deploy/services: ; skaffold run -f deployment/services/skaffold.yaml
 
 
 .PHONY: pf
-pf: pf/postgresql pf/kafka pf/eureka pf/gateway
+pf: pf/postgresql pf/kafka pf/redis pf/eureka pf/gateway
 
 .PHONY: pf/kibana
 pf/kibana:
@@ -56,6 +61,13 @@ pf/keycloak:
 .PHONY: pf/kafka
 pf/kafka:
 	kubectl -n $(NS_KAFKA) port-forward service/kafka 9092:tcp-client
+
+.PHONY: pf/redis
+pf/redis: pf/redis-master pf/redis-slave
+.PHONY: pf/redis-master
+pf/redis-master: ; kubectl -n $(NS_REDIS) port-forward service/redis-master 6379:redis
+.PHONY: pf/redis-slave
+pf/redis-slave: ; kubectl -n $(NS_REDIS) port-forward service/redis-slave 6380:redis
 
 .PHONY: pf/eureka
 pf/eureka:
