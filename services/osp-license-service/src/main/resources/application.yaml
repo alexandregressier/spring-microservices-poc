@@ -71,6 +71,13 @@ spring:
       kafka:
         binder:
           brokers: kafka
+  redis:
+    cluster:
+      master:
+        host: redis-master
+      replicas:
+        - host: redis-slave
+      password: redis
 server:
   port: 80
 logging:

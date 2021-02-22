@@ -3,6 +3,7 @@ package dev.gressier.osp.services.license
 import dev.gressier.osp.commons.context.UserContextFilter
 import dev.gressier.osp.commons.context.UserContextInterceptor
 import dev.gressier.osp.services.license.config.Config
+import dev.gressier.osp.services.license.config.RedisConfig
 import io.github.resilience4j.circuitbreaker.CircuitBreaker
 import io.github.resilience4j.core.registry.EntryAddedEvent
 import io.github.resilience4j.core.registry.EntryRemovedEvent
@@ -25,7 +26,7 @@ private val log = KotlinLogging.logger {}
 
 @EnableFeignClients
 @EnableDiscoveryClient
-@EnableConfigurationProperties(Config::class)
+@EnableConfigurationProperties(Config::class, RedisConfig::class)
 @SpringBootApplication
 class App {
 
