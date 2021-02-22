@@ -31,12 +31,15 @@ deploy/kafka:
 	skaffold run -f deployment/vendor/kafka/skaffold.yaml
 
 .PHONY: deploy/osp
-deploy/osp:
-	skaffold run
+deploy/osp: deploy/meta-services deploy/services
+.PHONY: deploy/meta-services
+deploy/meta-services: ; skaffold run -f deployment/meta-services/skaffold.yaml
+.PHONY: deploy/services
+deploy/services: ; skaffold run -f deployment/services/skaffold.yaml
 
 
 .PHONY: pf
-pf: pf/kibana pf/postgresql pf/keycloak pf/kafka pf/eureka pf/gateway
+pf: pf/postgresql pf/kafka pf/eureka pf/gateway
 
 .PHONY: pf/kibana
 pf/kibana:

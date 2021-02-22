@@ -2,26 +2,19 @@ apiVersion: skaffold/v2beta12
 kind: Config
 build:
   artifacts:
-    # Meta Services
     - image: gressier/osp-config-service
       custom:
         buildCommand: ./gradlew meta-services:osp-config-service:bootBuildImage --imageName "$IMAGE"
+
     - image: gressier/osp-eureka-service
       custom:
         buildCommand: ./gradlew meta-services:osp-eureka-service:bootBuildImage --imageName "$IMAGE"
+
     - image: gressier/osp-gateway-service
       custom:
         buildCommand: ./gradlew meta-services:osp-gateway-service:bootBuildImage --imageName "$IMAGE"
 
-    # Services
-    - image: gressier/osp-organization-service
-      custom:
-        buildCommand: ./gradlew services:osp-organization-service:bootBuildImage --imageName "$IMAGE"
-    - image: gressier/osp-license-service
-      custom:
-        buildCommand: ./gradlew services:osp-license-service:bootBuildImage --imageName "$IMAGE"
-
 deploy:
   kubectl:
     manifests:
-      - '*/**/manifests.yaml'
+      - 'meta-services/**/manifests.yaml'

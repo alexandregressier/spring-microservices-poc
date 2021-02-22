@@ -1,0 +1,16 @@
+apiVersion: skaffold/v2beta12
+kind: Config
+build:
+  artifacts:
+    - image: gressier/osp-organization-service
+      custom:
+        buildCommand: ./gradlew services:osp-organization-service:bootBuildImage --imageName "$IMAGE"
+
+    - image: gressier/osp-license-service
+      custom:
+        buildCommand: ./gradlew services:osp-license-service:bootBuildImage --imageName "$IMAGE"
+
+deploy:
+  kubectl:
+    manifests:
+      - 'services/**/manifests.yaml'

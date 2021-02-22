@@ -15,12 +15,6 @@ spec:
       annotations:
         fluentbit.io/parser: osp-spring-boot
     spec:
-      initContainers:
-        - name: wait-for-200
-          image: stefanevinance/wait-for-200
-          env:
-            - name: URL
-              value: osp-config-service/actuator/health
       containers:
         - name: osp-license-service
           image: gressier/osp-license-service
@@ -30,22 +24,6 @@ spec:
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: k8s,dev
-#          readinessProbe:
-#            httpGet:
-#              path: /actuator/health
-#              port: http
-#            initialDelaySeconds: 10
-#            periodSeconds: 3
-#            timeoutSeconds: 2
-#            failureThreshold: 1
-#          livenessProbe:
-#            httpGet:
-#              path: /actuator/health
-#              port: http
-#            initialDelaySeconds: 20
-#            periodSeconds: 8
-#            timeoutSeconds: 2
-#            failureThreshold: 1
 
 ---
 apiVersion: v1
