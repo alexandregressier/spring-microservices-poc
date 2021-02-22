@@ -1,4 +1,4 @@
-package dev.gressier.osp.services.organization
+package dev.gressier.osp.services.organization.config
 
 import dev.gressier.osp.services.organization.model.Organization
 import dev.gressier.osp.services.organization.repository.OrganizationRepository

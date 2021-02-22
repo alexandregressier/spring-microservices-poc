@@ -1,4 +1,4 @@
-package dev.gressier.osp.services.license
+package dev.gressier.osp.services.license.config
 
 import dev.gressier.osp.services.license.model.License
 import dev.gressier.osp.services.license.repository.LicenseRepository
