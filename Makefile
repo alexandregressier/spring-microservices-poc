@@ -11,7 +11,7 @@ NS_OSP = default
 
 
 .PHONY: deploy
-deploy: deploy/postgresql deploy/keycloak deploy/kafka deploy/redis deploy/osp
+deploy: deploy/efk deploy/postgresql deploy/keycloak deploy/kafka deploy/redis deploy/osp
 
 .PHONY: deploy/efk
 deploy/efk:
@@ -44,7 +44,7 @@ deploy/services: ; skaffold run -f deployment/services/skaffold.yaml
 
 
 .PHONY: pf
-pf: pf/postgresql pf/kafka pf/redis pf/eureka pf/gateway
+pf: pf/kibana pf/postgresql pf/kafka pf/redis pf/eureka pf/gateway
 
 .PHONY: pf/kibana
 pf/kibana:
