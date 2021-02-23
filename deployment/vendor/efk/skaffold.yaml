@@ -6,8 +6,6 @@ deploy:
       - name: elasticsearch
         chartPath: elastic/elasticsearch
         remote: true
-        namespace: efk
-        createNamespace: true
         setValues:
           antiAffinity: soft
           replicas: "1"
@@ -15,4 +13,3 @@ deploy:
       - name: kibana
         chartPath: elastic/kibana
         remote: true
-        namespace: efk
