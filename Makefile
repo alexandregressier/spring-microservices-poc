@@ -4,7 +4,7 @@ GRADLE = ./gradlew
 
 
 .PHONY: deploy
-deploy: deploy/efk deploy/postgresql deploy/keycloak deploy/kafka deploy/redis deploy/osp
+deploy: deploy/efk deploy/postgresql deploy/keycloak deploy/kafka deploy/redis deploy/zipkin deploy/osp
 
 .PHONY: deploy/efk
 deploy/efk:
@@ -28,6 +28,10 @@ deploy/kafka:
 deploy/redis:
 	skaffold run -f deployment/vendor/redis/skaffold.yaml
 
+.PHONY: deploy/zipkin
+deploy/zipkin:
+	kubectl apply -f deployment/vendor/zipkin/zipkin.yaml
+
 .PHONY: deploy/osp
 deploy/osp: deploy/meta-services deploy/services
 .PHONY: deploy/meta-services
@@ -37,7 +41,7 @@ deploy/services: ; skaffold run -f deployment/services/skaffold.yaml
 
 
 .PHONY: pf
-pf: pf/kibana pf/postgresql pf/keycloak pf/kafka pf/redis pf/eureka pf/gateway
+pf: pf/kibana pf/postgresql pf/keycloak pf/kafka pf/redis pf/zipkin pf/eureka pf/gateway
 
 .PHONY: pf/kibana
 pf/kibana:
@@ -61,6 +65,10 @@ pf/redis: pf/redis-master pf/redis-slave
 pf/redis-master: ; kubectl port-forward service/redis-master 6379:redis
 .PHONY: pf/redis-slave
 pf/redis-slave: ; kubectl port-forward service/redis-slave 6380:redis
+
+.PHONY: pf/zipkin
+pf/zipkin:
+	kubectl port-forward service/zipkin 9411:http
 
 .PHONY: pf/eureka
 pf/eureka:
