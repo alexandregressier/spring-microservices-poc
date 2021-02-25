@@ -53,6 +53,10 @@ dependencies {
     // Messaging
     implementation("org.springframework.cloud:spring-cloud-starter-stream-kafka")
 
+    // Observability
+    implementation("org.springframework.cloud:spring-cloud-starter-sleuth")
+    implementation("org.springframework.cloud:spring-cloud-sleuth-zipkin")
+
     // Web
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-hateoas")

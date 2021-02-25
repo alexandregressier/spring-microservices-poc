@@ -41,6 +41,10 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
     implementation("com.github.ben-manes.caffeine:caffeine:2.8.8")
 
+    // Observability
+    implementation("org.springframework.cloud:spring-cloud-starter-sleuth")
+    implementation("org.springframework.cloud:spring-cloud-sleuth-zipkin")
+
     // Spring Cloud Routing
     implementation("org.springframework.cloud:spring-cloud-starter-gateway")
 
