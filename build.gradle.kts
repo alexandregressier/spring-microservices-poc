@@ -1,6 +1,6 @@
 plugins {
     // Versions
-    val versionKotlin                     = "1.4.21"
+    val versionKotlin                     = "1.4.30"
     val versionSpringBoot                 = "2.4.4-SNAPSHOT"
     val versionSpringDependencyManagement = "1.0.11.RELEASE"
 
