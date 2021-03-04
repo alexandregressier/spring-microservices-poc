@@ -82,7 +82,7 @@ server:
   port: 80
 logging:
   pattern:
-    console: "%date{yyyy-MM-dd'T'HH:mm:ss.SSSXXX, UTC} %relative %level ${PID} --- [%thread] %logger : %message%n%rootException"
+    console: "%date{yyyy-MM-dd'T'HH:mm:ss.SSSXXX, UTC} %relative ${LOG_LEVEL_PATTERN:%level} ${PID} --- [%thread] %logger : %message%n%rootException"
 eureka:
   client:
     service-url:
